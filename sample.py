@@ -10,23 +10,25 @@ from six.moves import cPickle
 from utils import TextLoader
 from model import Model
 
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--save_dir', type=str, default='save',
-                       help='model directory to load stored checkpointed models from')
+                        help='model directory to load stored checkpointed models from')
     parser.add_argument('-n', type=int, default=200,
-                       help='number of words to sample')
+                        help='number of words to sample')
     parser.add_argument('--prime', type=str, default=' ',
-                       help='prime text')
+                        help='prime text')
     parser.add_argument('--pick', type=int, default=1,
-                       help='1 = weighted pick, 2 = beam search pick')
+                        help='1 = weighted pick, 2 = beam search pick')
     parser.add_argument('--width', type=int, default=4,
-                       help='width of the beam search')
+                        help='width of the beam search')
     parser.add_argument('--sample', type=int, default=1,
-                       help='0 to use max at each timestep, 1 to sample at each timestep, 2 to sample on spaces')
+                        help='0 to use max at each timestep, 1 to sample at each timestep, 2 to sample on spaces')
 
     args = parser.parse_args()
     sample(args)
+
 
 def sample(args):
     with open(os.path.join(args.save_dir, 'config.pkl'), 'rb') as f:
@@ -41,6 +43,7 @@ def sample(args):
         if ckpt and ckpt.model_checkpoint_path:
             saver.restore(sess, ckpt.model_checkpoint_path)
             print(model.sample(sess, words, vocab, args.n, args.prime, args.sample, args.pick, args.width))
+
 
 if __name__ == '__main__':
     main()

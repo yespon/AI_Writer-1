@@ -6,6 +6,7 @@ import numpy as np
 
 from beam import BeamSearch
 
+
 class Model():
     def __init__(self, args, infer=False):
         self.args = args
@@ -65,21 +66,21 @@ class Model():
             prev_symbol = tf.stop_gradient(tf.argmax(prev, 1))
             return tf.nn.embedding_lookup(embedding, prev_symbol)
 
-        outputs, last_state = legacy_seq2seq.rnn_decoder(inputs, self.initial_state, cell, loop_function=loop if infer else None, scope='rnnlm')
+        outputs, last_state = legacy_seq2seq.rnn_decoder(inputs, self.initial_state, cell,
+                                                         loop_function=loop if infer else None, scope='rnnlm')
         output = tf.reshape(tf.concat(outputs, 1), [-1, args.rnn_size])
         self.logits = tf.matmul(output, softmax_w) + softmax_b
         self.probs = tf.nn.softmax(self.logits)
         loss = legacy_seq2seq.sequence_loss_by_example([self.logits],
-                [tf.reshape(self.targets, [-1])],
-                [tf.ones([args.batch_size * args.seq_length])],
-                args.vocab_size)
+                                                       [tf.reshape(self.targets, [-1])],
+                                                       [tf.ones([args.batch_size * args.seq_length])],
+                                                       args.vocab_size)
         self.cost = tf.reduce_sum(loss) / args.batch_size / args.seq_length
         tf.summary.scalar("cost", self.cost)
         self.final_state = last_state
         self.lr = tf.Variable(0.0, trainable=False)
         tvars = tf.trainable_variables()
-        grads, _ = tf.clip_by_global_norm(tf.gradients(self.cost, tvars),
-                args.grad_clip)
+        grads, _ = tf.clip_by_global_norm(tf.gradients(self.cost, tvars), args.grad_clip)
         optimizer = tf.train.AdamOptimizer(self.lr)
         self.train_op = optimizer.apply_gradients(zip(grads, tvars))
 
@@ -87,7 +88,7 @@ class Model():
         def weighted_pick(weights):
             t = np.cumsum(weights)
             s = np.sum(weights)
-            return(int(np.searchsorted(t, np.random.rand(1)*s)))
+            return int(np.searchsorted(t, np.random.rand(1) * s))
 
         def beam_search_predict(sample, state):
             """Returns the updated probability distribution (`probs`) and
@@ -117,12 +118,12 @@ class Model():
         if pick == 1:
             state = sess.run(self.cell.zero_state(1, tf.float32))
             if not len(prime) or prime == ' ':
-                prime  = random.choice(list(vocab.keys()))
-            print (prime)
+                prime = random.choice(list(vocab.keys()))
+            print(prime)
             for word in prime.split()[:-1]:
-                print (word)
+                print(word)
                 x = np.zeros((1, 1))
-                x[0, 0] = vocab.get(word,0)
+                x[0, 0] = vocab.get(word, 0)
                 feed = {self.input_data: x, self.initial_state:state}
                 [state] = sess.run([self.final_state], feed)
 

@@ -7,6 +7,7 @@ import numpy as np
 import re
 import itertools
 
+
 class TextLoader():
     def __init__(self, data_dir, batch_size, seq_length, encoding=None):
         self.data_dir = data_dir
@@ -93,7 +94,7 @@ class TextLoader():
     def create_batches(self):
         self.num_batches = int(self.tensor.size / (self.batch_size *
                                                    self.seq_length))
-        if self.num_batches==0:
+        if self.num_batches == 0:
             assert False, "Not enough data. Make seq_length and batch_size small."
 
         self.tensor = self.tensor[:self.num_batches * self.batch_size * self.seq_length]

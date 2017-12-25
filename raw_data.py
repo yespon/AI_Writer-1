@@ -1,8 +1,8 @@
 import json
 import sys
 
-raw_data = "./data/sample-1M.jsonl"
-to_input_data = "./data/sample-1M.txt"
+raw_data = "./data/news/sample-1M.jsonl"
+to_input_data = "./data/news/input.txt"
 
 with open(raw_data, "r") as f:
     txt_file = open(to_input_data, "w")

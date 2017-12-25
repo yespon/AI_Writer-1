@@ -138,10 +138,44 @@ You do her bear comfort him between him or our noble bosom he did Bolingbroke's
 ```
 
 # Projects
+
+
+# Projects
+
 If you have any project using this word-rnn, please let us know. I'll list up your project here.
 
-- http://bot.wpoem.com/ (Simple poem generator in Korean)
+
+[Training data](http://research.signalmedia.co/newsir16/signal-dataset.html)
+
+Download
+To obtain the dataset, please follow this [link:](http://goo.gl/forms/5i4KldoWIX)
+
+wget http://research.signalmedia.co/newsir16/signalmedia-1m.jsonl.gz
+
+Format
+Upon downloading the data, you get a single compressed text file (approximately 1GB in size).
+You can uncompress it using gzip or zcat, etc.
+The file is in JSONL format, where each line is a JSON object
+representing an article.
+Each article has the following fields:
+
+    •	id: a unique identifier for the article
+    •	title: the title of the article
+    •	content: the textual content of the article (may occasionally contain HTML and JavaScript content)
+    •	source: the name of the article source
+    •	published: the publication date of the article
+    •	media-type: either "News" or "Blog"
+
+    For example :{
+        "id": "a080f99a-07d9-47d1-8244-26a540017b7a",
+        "content": "KUALA LUMPUR, Sept 15 (MySinchew) -- The Kuala Lumpur City Hall today issued ...",
+        "title": "Pay up or face legal action: DBKL",
+        "media-type": "News",
+        "source": "My Sinchew",
+        published": "2015-09-15T10:17:53Z"
+    }
 
 
-# Contribution
-Your comments (issues) and PRs are always welcome.
+Project Details
+Vocabulary-embedding.ipynb
+Title -> head Content -> Desc

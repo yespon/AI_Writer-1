@@ -39,5 +39,6 @@ class TestBeamMethods(unittest.TestCase):
         # Make sure that the best beam has the lowest score.
         self.assertEqual(samples[np.argmin(scores)], [0, 1, 4, 4, 4])
 
+
 if __name__ == '__main__':
     unittest.main()

@@ -51,7 +51,7 @@ def sample(args):
 def proc_main(main_word):
     # python sample.py --prime "KING RICHARD III:" -n 100 --pick 2 --width 4
     settings = {}
-    settings['saver_dir'] = 'save'  # model directory to load stored checkpointed models from
+    settings['save_dir'] = 'save'  # model directory to load stored checkpointed models from
     settings['n'] = 100  # number of words to sample
     settings['prime'] = main_word  # help='prime text
     settings['pick'] = 2  # 1 = weighted pick, 2 = beam search pick

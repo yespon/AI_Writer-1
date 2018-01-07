@@ -17,7 +17,7 @@ with open(raw_data, "r") as f:
             sys.stdout.write("\r process: {} / 1 M".format(cnt))
             sys.stdout.flush()
 
-        if cnt > 50000:
+        if cnt > 5000:
             break
     txt_file.close()
 
